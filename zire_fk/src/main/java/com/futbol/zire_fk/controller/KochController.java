@@ -17,6 +17,8 @@ import java.security.Principal;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("koch/")
@@ -50,7 +52,6 @@ public class KochController {
         } else {
             size = 5; // desktop
         }
-
         Page<Koch> kochPage = kochService.findAll(PageRequest.of(page, size));
         model.addAttribute("kochs", kochPage.getContent());
         model.addAttribute("page", kochPage);
@@ -65,10 +66,17 @@ public class KochController {
         return "koch/kochList";
     }
 
+    @PostMapping("/kochEdit")
+    public String editSubmit(@ModelAttribute Koch koch, RedirectAttributes redirectAttributes){
+        kochService.save(koch);
+        redirectAttributes.addFlashAttribute("successMessage", "İstifadəçi uğurla yeniləndi!");
+        return "redirect:/koch/kochList";
+    }
+
 
     // Formu göstərmək üçün
     @GetMapping("/kochAdd")
-    public String showForm(Model model, HttpServletRequest request) {
+    public String showForm(Model model, HttpServletRequest request, Principal principal) {
         model.addAttribute("kochDto", new KochDto());
 
         // Theme cookie-dən oxumaq
@@ -81,6 +89,11 @@ public class KochController {
             }
         }
         model.addAttribute("theme", theme + "-mode"); // body üçün
+        // İstifadəçi adı əlavə et (login olmuşdursa)
+        if (principal != null) {
+            kochService.findByUsername(principal.getName())
+                    .ifPresent(user -> model.addAttribute("name", user.getName()));
+        }
 
         return "koch/kochAdd"; // Thymeleaf form səhifəsi
     }
@@ -92,20 +105,43 @@ public class KochController {
         return "redirect:/koch/kochList"; // save sonrası list səhifəsinə yönləndir
     }
 
+
+
     @GetMapping("/kochEdit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
+    public String editForm(@PathVariable Long id,
+                           Model model,
+                           HttpServletRequest request,
+                           Principal principal) {
+
+        // Koch obyektini tapmaq
         Koch koch = kochService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Koch tapılmadı: " + id));
         model.addAttribute("koch", koch);
-        System.out.println("koch: " + koch);
+
+        // Theme cookie-dən oxumaq
+        String theme = "dark"; // default
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("theme".equals(cookie.getName())) {
+                    theme = cookie.getValue(); // dark / light
+                }
+            }
+        }
+        model.addAttribute("theme", theme + "-mode"); // body üçün
+
+        // İstifadəçi adı əlavə et (login olmuşdursa)
+        if (principal != null) {
+            kochService.findByUsername(principal.getName())
+                    .ifPresent(user -> model.addAttribute("name", user.getName()));
+        }
+
         return "koch/kochEdit";
     }
 
-    @PostMapping("/edit")
-    public String editSubmit(@ModelAttribute Koch koch) {
-        kochService.save(koch);
-        return "redirect:/koch";
-    }
+
+
+
+
 
 
     @DeleteMapping("/delete/{id}")

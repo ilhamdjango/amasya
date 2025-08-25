@@ -21,15 +21,13 @@
 
 <!-- Add user kart -->
 <div class="login-card">
-
-    <h2 class="text-center mb-4">Yeni İstifadəçi Əlavə Et</h2>
-
-    <div class="d-flex align-items-center justify-content-start user-info-box">
-        <span class="me-3">Salam, <strong th:text="${name}">İstifadəçi</strong></span>
-        <form th:action="@{/logout}" method="post" class="d-inline">
-            <button type="submit" class="btn btn-success mb-3">Çıxış</button>
+    <div class="d-flex align-items-center justify-content-end">
+        <span class="me-3"><strong th:text="${name}">İstifadəçi</strong></span>
+        <form th:action="@{/koch/kochList}" method="get" class="d-inline">
+            <button type="submit" class="btn btn-success mb-3">Geri</button>
         </form>
     </div>
+    <h3 class="text-center mb-4">Yeni İstifadəçi Əlavə Et</h3>
     <!-- AUTOCOMPLETE söndürülüb -->
     <form th:action="@{/koch/kochAdd}" method="post" autocomplete="off">
 

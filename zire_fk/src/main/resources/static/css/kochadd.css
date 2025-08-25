@@ -19,6 +19,14 @@ body {
     z-index: 1000;
     cursor: pointer;
 }
+.user-info-box {
+    position: absolute;
+    top: 10px;
+    right: 15px; /* sağa yapışdırır */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* yazı ilə düymə arasında boşluq */
+}
 
 /* Kart */
 .login-card {
