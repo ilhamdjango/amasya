@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Koch</title>
+</head>
+<body>
+<h1>Edit Koch</h1>
+
+<form th:action="@{/koch/edit}" th:object="${koch}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required/><br/>
+
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" th:field="*{surname}" required/><br/>
+
+    <label for="born">Born:</label>
+    <input type="text" id="born" th:field="*{born}" /><br/>
+
+
+
+    <label for="role">Role:</label>
+    <select id="role" th:field="*{role}">
+        <option th:value="ADMIN" th:selected="${koch.role == 'ADMIN'}">ADMIN</option>
+        <option th:value="ASSISTANT" th:selected="${koch.role == 'ASSISTANT'}">ASSISTANT</option>
+        <option th:value="KOCH" th:selected="${koch.role == 'KOCH'}">KOCH</option>
+        <option th:value="STUDENT" th:selected="${koch.role == 'STUDENT'}">STUDENT</option>
+        <option th:value="PARENT" th:selected="${koch.role == 'PARENT'}">PARENT</option>
+    </select><br/><br/>
+
+    <button type="submit">Save</button>
+</form>
+
+<a th:href="@{/koch}">Back to List</a>
+</body>
+</html>

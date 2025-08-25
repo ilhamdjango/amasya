@@ -1,0 +1,150 @@
+/* Ümumi bədən */
+body {
+
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    position: relative;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Toggle düyməsi */
+#mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+/* Kart */
+.login-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+/* Input wrapper və password toggle */
+.input-wrapper {
+    position: relative;
+}
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+/* Düymə bütün genişlikdə */
+.btn-block {
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light mode */
+body.light-mode {
+    background-color: #f5f5f5;
+    color: #000;
+}
+body.light-mode .login-card {
+    background-color: #ffffff;
+}
+body.light-mode .form-control,
+body.light-mode .form-select {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+}
+body.light-mode .form-control::placeholder {
+    color: #666;
+}
+body.light-mode .toggle-password {
+    color: #000;
+}
+
+/* Dark mode */
+body.dark-mode {
+    background-color: #1e1e2f;
+    color: #fff;
+}
+body.dark-mode .login-card {
+    background-color: #2c2c3e;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);
+}
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #3a3a4f;
+    color: #fff;
+    border: 1px solid #555;
+}
+body.dark-mode .form-control::placeholder {
+    color: #ccc;
+}
+body.dark-mode .toggle-password {
+    color: #fff;
+}
+/* Flatpickr input daha aydın olsun */
+.flatpickr-input {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid #ccc;
+}
+
+/* Flatpickr calendar shadow və radius */
+.flatpickr-calendar {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Günləri biraz daha böyük və kliklənə bilən et */
+.flatpickr-day {
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.user-info-box {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+
+/* Mobil üçün uyğunluq */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 1rem;
+        max-width: 95%;
+    }
+}
+
+/* Kiçik telefonlar (iPhone 12 və daha kiçik) */
+@media (max-width: 400px) {
+    .btn-block {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Orta ekranlı kiçik telefonlar (iPhone XR tipli) */
+@media (min-width: 401px) and (max-width: 430px) {
+    .btn-block {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

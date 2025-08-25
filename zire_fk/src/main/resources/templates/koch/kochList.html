@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koch List</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome (ikonlar üçün) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/kochlist.css}" rel="stylesheet">
+    <!-- Responsive paginator JS -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+
+</head>
+<body th:class="${theme}">
+<div class="container py-4">
+    <div class="d-flex align-items-center justify-content-end">
+        <span class="me-3">Salam, <strong th:text="${name}">İstifadəçi</strong></span>
+        <form th:action="@{/logout}" method="post" class="d-inline">
+            <button type="submit" class="btn btn-success mb-3">Çıxış</button>
+        </form>
+    </div>
+
+
+    <h1 class="mb-4">İstifadəçilər</h1>
+    <a th:href="@{/koch/kochAdd}" class="btn btn-success mb-3">Əlavə et</a>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Istifadəçi adı</th>
+                <th>Doğum tarixi</th>
+                <th>Missiya</th>
+                <th>Əməliyyatlar</th>
+            </tr>
+            </thead>
+            <tbody th:each="koch : ${kochs}">
+            <tr th:id="'row-' + ${koch.id}">
+                <td th:text="${koch.name}" data-label="Ad"></td>
+                <td th:text="${koch.surname}" data-label="Soyad"></td>
+                <td th:text="${koch.username}" data-label="Istifadəçi adı"></td>
+                <td th:text="${koch.born}" data-label="Doğum tarixi"></td>
+                <td th:text="${koch.role}" data-label="Missiya"></td>
+                <td data-label="Əməliyyatlar">
+                    <a th:href="@{'/koch/kochEdit/' + ${koch.id}}" class="btn btn-sm btn-primary me-2">Dəyiş</a>
+                    <button type="button" class="btn btn-sm btn-danger"
+                            th:onclick="'confirmDelete(' + ${koch.id} + ')'">
+                        Sil
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <!-- Previous -->
+            <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+                <a class="page-link" th:href="@{/koch/kochList(page=${page.number - 1}, size=${size})}">&laquo;</a>
+
+            </li>
+
+            <!-- Page numbers -->
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+                th:classappend="${i == page.number} ? 'active'">
+                <a class="page-link" th:href="@{/koch/kochList(page=${i}, size=${size})}" th:text="${i + 1}">1</a>
+            </li>
+
+            <!-- Next -->
+            <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+                <a class="page-link" th:href="@{/koch/kochList(page=${page.number + 1}, size=${size})}">&raquo;</a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/theme.js}"></script>
+<script th:src="@{/js/paginator.js}"></script>
+<script th:src="@{/js/userdelete.js}"></script>
+</body>
+</html>
