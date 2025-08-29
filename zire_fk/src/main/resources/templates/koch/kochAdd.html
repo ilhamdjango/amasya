@@ -29,7 +29,7 @@
     </div>
     <h3 class="text-center mb-4">Yeni İstifadəçi Əlavə Et</h3>
     <!-- AUTOCOMPLETE söndürülüb -->
-    <form th:action="@{/koch/kochAdd}" method="post" autocomplete="off">
+    <form th:action="@{/koch/kochAdd}" th:object="${kochDto}" method="post" autocomplete="off">
 
         <!-- Name -->
         <div class="mb-3">
@@ -72,7 +72,7 @@
             <select class="form-select" id="role" name="role" required>
                 <option value="">Seçin...</option>
                 <option value="STUDENT">Oyunçu</option>
-                <option value="COACH">Məşqçi</option>
+                <option value="KOCH">Məşqçi</option>
                 <option value="ADMIN">Admin</option>
             </select>
         </div>
@@ -81,7 +81,7 @@
         <div class="mb-3">
             <label for="born" class="form-label">Doğum tarixi</label>
             <input type="text" class="form-control" id="born" name="born"
-                   placeholder="yyyy-mm-dd" required>
+                   placeholder="dd-mm-yyyy" required>
         </div>
 
         <!-- Submit -->

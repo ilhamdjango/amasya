@@ -1,6 +1,4 @@
-/* Ümumi bədən */
 body {
-
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -9,6 +7,7 @@ body {
     font-family: Arial, sans-serif;
     position: relative;
     transition: background-color 0.3s, color 0.3s;
+    min-height: 600px; /* calendar collapse olmaması üçün */
 }
 
 /* Toggle düyməsi */
@@ -19,13 +18,15 @@ body {
     z-index: 1000;
     cursor: pointer;
 }
+
+/* User info box */
 .user-info-box {
     position: absolute;
     top: 10px;
-    right: 15px; /* sağa yapışdırır */
+    left: 15px;
     display: flex;
     align-items: center;
-    gap: 10px; /* yazı ilə düymə arasında boşluq */
+    gap: 10px;
 }
 
 /* Kart */
@@ -100,36 +101,69 @@ body.dark-mode .form-control::placeholder {
 body.dark-mode .toggle-password {
     color: #fff;
 }
-/* Flatpickr input daha aydın olsun */
+
+/* Flatpickr input */
 .flatpickr-input {
-    padding: 0.5rem 0.75rem;
+    padding: 0.6rem 0.85rem;
     font-size: 1rem;
-    border-radius: 0.375rem;
-    border: 1px solid #ccc;
-}
-
-/* Flatpickr calendar shadow və radius */
-.flatpickr-calendar {
     border-radius: 0.5rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 1px solid #ccc;
+    width: 100%;
+    transition: all 0.3s;
 }
 
-/* Günləri biraz daha böyük və kliklənə bilən et */
+/* Flatpickr calendar */
+.flatpickr-calendar {
+    border-radius: 0.5rem !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
+    border: none !important;
+    background-color: #fff !important;
+    transition: all 0.3s;
+}
+body.dark-mode .flatpickr-calendar {
+    background-color: #2c2c3e !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
+}
+
+/* Flatpickr günlər */
 .flatpickr-day {
-    width: 2.5rem;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    font-size: 1rem;
-    margin: 2px;
+    width: 2.8rem !important;
+    height: 2.8rem !important;
+    line-height: 2.8rem !important;
+    font-size: 1rem !important;
+    margin: 3px !important;
+    border-radius: 0.4rem !important;
     cursor: pointer;
+    transition: all 0.2s;
+    color: #FFD700 !important; /* Gold rəngli yazılar */
 }
 
-.user-info-box {
-    position: absolute;
-    top: 10px;
-    left: 15px;
+/* Hover effekt */
+.flatpickr-day:hover {
+    background-color: #4e73df !important;
+    color: #FFD700 !important; /* Gold */
 }
 
+/* Seçilmiş gün */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: #2e59d9 !important;
+    color: #FFD700 !important; /* Gold */
+}
+
+/* Dark mode günlər üçün gold */
+body.dark-mode .flatpickr-day {
+    color: #FFD700 !important;
+}
+body.dark-mode .flatpickr-day:hover {
+    color: #FFD700 !important;
+}
+body.dark-mode .flatpickr-day.selected,
+body.dark-mode .flatpickr-day.startRange,
+body.dark-mode .flatpickr-day.endRange {
+    color: #FFD700 !important;
+}
 
 /* Mobil üçün uyğunluq */
 @media (max-width: 768px) {
@@ -139,7 +173,21 @@ body.dark-mode .toggle-password {
     }
 }
 
-/* Kiçik telefonlar (iPhone 12 və daha kiçik) */
+/* Kiçik ekranlar üçün */
+@media (max-width: 480px) {
+    .flatpickr-calendar {
+        width: 90% !important;
+        font-size: 0.9rem !important;
+    }
+    .flatpickr-day {
+        width: 2.2rem !important;
+        height: 2.2rem !important;
+        line-height: 2.2rem !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+/* Düymələr üçün kiçik ekran */
 @media (max-width: 400px) {
     .btn-block {
         display: block;
@@ -147,8 +195,6 @@ body.dark-mode .toggle-password {
         margin-bottom: 5px;
     }
 }
-
-/* Orta ekranlı kiçik telefonlar (iPhone XR tipli) */
 @media (min-width: 401px) and (max-width: 430px) {
     .btn-block {
         display: inline-block;

@@ -27,8 +27,9 @@
         </form>
     </div>
     <h3 class="text-center mb-4">İstifadəçi Redaktə Et</h3>
-        <form th:action="@{/koch/kochEdit}" class="d-inline" th:object="${koch}" method="post" autocomplete="off">
-        <input type="hidden" th:field="*{id}"/>
+    <form th:action="@{/koch/kochEdit/{id}(id=${koch.id})}" th:object="${koch}" method="post" autocomplete="off">
+
+    <input type="hidden" th:field="*{id}"/>
 
         <!-- Name -->
         <div class="mb-3">
@@ -70,7 +71,7 @@
             <select class="form-select" id="role" th:field="*{role}" required>
                 <option value="">Seçin...</option>
                 <option value="STUDENT">Oyunçu</option>
-                <option value="COACH">Məşqçi</option>
+                <option value="KOCH">Məşqçi</option>
                 <option value="ADMIN">Admin</option>
             </select>
         </div>

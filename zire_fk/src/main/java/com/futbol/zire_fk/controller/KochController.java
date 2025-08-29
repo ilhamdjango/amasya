@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.futbol.zire_fk.entity.Role;
+
+
+
 
 @Controller
 @RequestMapping("koch/")
@@ -66,12 +70,35 @@ public class KochController {
         return "koch/kochList";
     }
 
-    @PostMapping("/kochEdit")
-    public String editSubmit(@ModelAttribute Koch koch, RedirectAttributes redirectAttributes){
-        kochService.save(koch);
-        redirectAttributes.addFlashAttribute("successMessage", "İstifadəçi uğurla yeniləndi!");
+    @PostMapping("/kochEdit/{id}")
+    public String updateKoch(@PathVariable Long id, @ModelAttribute KochDto kochDto, RedirectAttributes redirectAttributes) {
+        Optional<Koch> kochOpt = kochService.findById(id);
+        if (kochOpt.isPresent()) {
+            Koch koch = kochOpt.get();
+
+            // Əgər son admindirsə və rol dəyişirsə
+            if (koch.getRole() == Role.ADMIN &&
+                    !Role.valueOf(kochDto.getRole().toUpperCase()).equals(Role.ADMIN) &&
+                    kochService.countByRole(Role.ADMIN) <= 1) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Sistemdə ən azı bir aktiv admin qalmalıdır!");
+                return "redirect:/koch/kochList";
+            }
+
+            // Digər sahələri güncəllə
+            koch.setName(kochDto.getName());
+            koch.setSurname(kochDto.getSurname());
+            koch.setUsername(kochDto.getUsername());
+            if (kochDto.getRole() != null) {
+                koch.setRole(Role.valueOf(kochDto.getRole().toUpperCase()));
+            }
+            koch.setBorn(kochDto.getBorn());
+            kochService.save(koch);
+
+            redirectAttributes.addFlashAttribute("successMessage", "İstifadəçi uğurla dəyişdirildi!");
+        }
         return "redirect:/koch/kochList";
     }
+
 
 
     // Formu göstərmək üçün
@@ -112,12 +139,10 @@ public class KochController {
                            Model model,
                            HttpServletRequest request,
                            Principal principal) {
-
         // Koch obyektini tapmaq
         Koch koch = kochService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Koch tapılmadı: " + id));
         model.addAttribute("koch", koch);
-
         // Theme cookie-dən oxumaq
         String theme = "dark"; // default
         if (request.getCookies() != null) {
@@ -128,29 +153,30 @@ public class KochController {
             }
         }
         model.addAttribute("theme", theme + "-mode"); // body üçün
-
         // İstifadəçi adı əlavə et (login olmuşdursa)
         if (principal != null) {
             kochService.findByUsername(principal.getName())
                     .ifPresent(user -> model.addAttribute("name", user.getName()));
         }
-
         return "koch/kochEdit";
     }
 
 
 
 
-
-
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteKoch(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteKoch(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
-            kochService.deleteById(id); // void metod
-            return ResponseEntity.ok().build();
+            kochService.deleteById(id); // Service-də soft delete
+            redirectAttributes.addFlashAttribute("successMessage", "İstifadəçi uğurla silindi!");
         } catch (EmptyResultDataAccessException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            redirectAttributes.addFlashAttribute("errorMessage", "İstifadəçi tapılmadı!");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage()); // Servisdən gələn konkret mesaj
         }
+        return "redirect:/koch/kochList";
     }
+
+
+
 }

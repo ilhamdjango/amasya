@@ -25,7 +25,7 @@ public class KochDto {
     private String surname;
 
     @NotNull(message = "Doğum tarixi boş ola bilməz")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate born;
 
 

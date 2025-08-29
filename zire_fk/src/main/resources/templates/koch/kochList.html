@@ -15,19 +15,29 @@
     <!-- Responsive paginator JS -->
     <meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
+
 <body th:class="${theme}">
 <div class="container py-4">
-    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
-        <span th:text="${successMessage}">Mesaj</span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <span class="me-3"><strong th:text="${name}">İstifadəçi</strong></span>
     <div class="d-flex align-items-center justify-content-end">
-        <span class="me-3">Salam, <strong th:text="${name}">İstifadəçi</strong></span>
+
+
+        <button type="submit" class="btn btn-success mb-3">Kabinetim</button>
         <form th:action="@{/logout}" method="post" class="d-inline">
             <button type="submit" class="btn btn-success mb-3">Çıxış</button>
         </form>
     </div>
+    <!-- Uğurlu əməliyyat -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
+    <!-- Xəta mesajı -->
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
 
 
@@ -51,14 +61,16 @@
                 <td th:text="${koch.name}" data-label="Ad"></td>
                 <td th:text="${koch.surname}" data-label="Soyad"></td>
                 <td th:text="${koch.username}" data-label="Istifadəçi adı"></td>
-                <td th:text="${koch.born}" data-label="Doğum tarixi"></td>
+                <td th:text="${koch.born != null} ? ${#temporals.format(koch.born, 'dd-MM-yyyy')} : ''" data-label="Doğum tarixi"></td>
                 <td th:text="${koch.role}" data-label="Missiya"></td>
                 <td data-label="Əməliyyatlar">
                     <a th:href="@{'/koch/kochEdit/' + ${koch.id}}" class="btn btn-sm btn-primary me-2">Dəyiş</a>
-                    <button type="button" class="btn btn-sm btn-danger"
-                            th:onclick="'confirmDelete(' + ${koch.id} + ')'">
-                        Sil
-                    </button>
+                    <form th:action="@{'/koch/delete/' + ${koch.id}}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Silmək istədiyinizə əminsiniz?')">
+                            Sil
+                        </button>
+                    </form>
                 </td>
             </tr>
             </tbody>
@@ -94,6 +106,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/paginator.js}"></script>
-<script th:src="@{/js/userdelete.js}"></script>
+
 </body>
 </html>
