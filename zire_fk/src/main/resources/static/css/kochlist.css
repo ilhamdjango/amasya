@@ -40,7 +40,11 @@ h1 {
 /* Table başlıqlar */
 /* Table thead th üçün mərkəzləşdirilmiş yazı */
 .table thead th {
+    background-color: #343a40;
+    color: white;
     text-align: center;
+    font-size: 14px;
+    white-space: nowrap;
 }
 
 /* Table body */
@@ -136,6 +140,13 @@ body.dark-mode .table tbody tr {
         display: none;
     }
 
+    @media screen and (max-width: 768px) {
+      .table thead th {
+        font-size: 12px; /* mobil üçün bir az kiçik */
+        white-space: normal; /* çox uzundursa sətirə keçsin */
+      }
+    }
+
     /* Hüceyrələr blok görünüşü alır */
     .table tbody td {
         display: block;
@@ -204,5 +215,55 @@ body.dark-mode .table tbody tr {
         }
     }
 
+}
+/* Select button stil */
+select.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #000;
+    appearance: none; /* browser default arrow gizlədir */
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+}
 
+/* Hover və fokus effekti */
+select.form-control:hover,
+select.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+/* Light mode */
+body.light-mode select.form-control {
+    background-color: #fff;
+    border: 1px solid #007bff;
+    color: #000;
+}
+
+/* Dark mode */
+body.dark-mode select.form-control {
+    background-color: #2c2c3e;
+    border: 1px solid #4a4aff;
+    color: #fff;
+}
+
+/* Səliqəli görünüş üçün ümumi card və div-lər */
+.login-card,
+.table-responsive,
+.container > div.mb-3 {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
+}
+
+/* Dark mode kölgə */
+body.dark-mode .login-card,
+body.dark-mode .table-responsive,
+body.dark-mode .container > div.mb-3 {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);
 }

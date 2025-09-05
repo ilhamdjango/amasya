@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koch List</title>
+    <title>Admintraining</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link th:href="@{/css/training.css}" rel="stylesheet">
+    <link th:href="@{/css/admintraining.css}" rel="stylesheet">
     <meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
 <body th:class="${theme}">
+<h3 class="text-center">Məşqlər</h3>
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <span><strong th:text="${name}">Məşqlər</strong></span>
         <div>
-            <a class="btn btn-success me-2" href="#">Kabinetim</a>
+            <a class="btn btn-success me-2" href="javascript:history.back()">Geri</a>
             <form th:action="@{/logout}" method="post" class="d-inline">
                 <button type="submit" class="btn btn-success">Çıxış</button>
             </form>
@@ -34,13 +35,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <h1 class="mb-4">Məşqlər</h1>
-    <a th:href="@{/training/trainingAdd}" class="btn btn-success mb-3">Əlavə et</a>
+
+
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover align-middle">
             <thead class="table-dark">
             <tr>
+                <th>Məşqçinin adı</th>
                 <th>Qrupun adı</th>
                 <th>Yaranma tarixi</th>
                 <th>Yaş aralığı</th>
@@ -51,26 +53,29 @@
                 <th>Qalıq</th>
                 <th>Borc nəfərlə</th>
                 <th>Aktivlik</th>
+                <th>Status</th>
                 <th>Əməliyyatlar</th>
+
             </tr>
             </thead>
             <tbody th:each="training : ${trainings}">
             <tr th:id="'row-' + ${training.id}">
+                <td th:text="${ training.koch.name}" data-label="Məşqçi"></td>
                 <td th:text="${training.name}" data-label="Qrupun adı"></td>
                 <td th:text="${#temporals.format(training.createdDate, 'dd-MM-yyyy')}" data-label="Yaranma tarixi"></td>
                 <td th:text="${training.ageRange}" data-label="Yaş aralığı"></td>
                 <td th:text="${training.childCount}" data-label="Uşaq sayı"></td>
                 <td th:text="${training.breakCount}" data-label="Fasilə"></td>
-                <td th:text="${training.totalPayment} + ' AZN'" data-label="Tam məbləğ"></td>
-                <td th:text="${training.paidAmount} + ' AZN'" data-label="Ödənişlər"></td>
-                <td th:text="${training.unpaidAmount} + ' AZN'" data-label="Qalıq"></td>
+                <td th:text="${training.totalPayment}" data-label="Tam məbləğ"></td>
+                <td th:text="${training.paidAmount}" data-label="Ödənişlər"></td>
+                <td th:text="${training.unpaidAmount}" data-label="Qalıq"></td>
                 <td th:text="${training.debtCount}" data-label="Borc nəfərlə"></td>
                 <td data-label="Aktivlik">
                     <div class="progress" style="height: 20px;">
                         <div class="progress-bar" role="progressbar"
                              th:if="${training.activePercent != null}"
                              th:style="'width:' + ${training.activePercent} + '%; background-color:' +
-                                 (${training.activePercent} <= 50 ? 'red' : (${training.activePercent} <= 75 ? 'blue' : 'green')) + ';'"
+                         (${training.activePercent} <= 50 ? 'red' : (${training.activePercent} <= 75 ? 'blue' : 'green')) + ';'"
                              th:text="${training.activePercent} + '%'">
                         </div>
                         <div class="progress-bar bg-secondary" role="progressbar"
@@ -79,6 +84,17 @@
                         </div>
                     </div>
                 </td>
+                <td >
+<span th:switch="${training.trainingDelete != null ? training.trainingDelete.name() : ''}">
+    <span th:case="'ACTIVE'" class="status-active" th:text="${training.trainingDelete.name()}"></span>
+    <span th:case="'DELETED'" class="status-deleted" th:text="${training.trainingDelete.name()}"></span>
+    <span th:case="*" class="status-pending" th:text="${training.trainingDelete != null ? training.trainingDelete.name() : 'UNKNOWN'}"></span>
+</span>
+
+
+                </td>
+
+
                 <td data-label="Əməliyyatlar">
                     <a th:href="@{'/training/trainingEdit/' + ${training.id}}"
                        class="btn btn-sm btn-primary me-2">Dəyiş</a>
@@ -89,6 +105,7 @@
                 </td>
             </tr>
             </tbody>
+
         </table>
     </div>
 

@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import java.util.List;
+import java.util.ArrayList;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "koch")
@@ -20,11 +25,22 @@ public class Koch {
     private boolean active = true; // default aktiv
     private String name;
     private String surname;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate born;
     private String photo;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+
+    // ===========================
+    // Burada əlavə edirsən:
+    @OneToMany(mappedBy = "koch", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Training> trainings = new ArrayList<>();
+
+    public List<Training> getTrainings() { return trainings; }
+    public void setTrainings(List<Training> trainings) { this.trainings = trainings; }
+    // ===========================
 
     public Koch() {}
 

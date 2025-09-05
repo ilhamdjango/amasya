@@ -79,10 +79,13 @@
 
         <!-- Born -->
         <div class="mb-3">
-            <label for="born" class="form-label">Doğum tarixi</label>
-            <input type="text" class="form-control" id="born" name="born"
-                   placeholder="dd-mm-yyyy" required>
+            <label class="form-label">Doğum tarixi</label>
+            <input type="text" class="form-control flat-date" th:field="*{born}" placeholder="dd-MM-yyyy">
         </div>
+
+
+
+
 
         <!-- Submit -->
         <button type="submit" class="btn btn-success w-100">Əlavə et</button>

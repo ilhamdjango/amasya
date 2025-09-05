@@ -40,10 +40,16 @@
 
         <!-- Yaranma tarixi -->
         <div class="mb-3">
-            <label for="born" class="form-label">Yaranma tarixi</label>
-            <input type="text" class="form-control" id="born" th:field="*{born}"
-                   placeholder="dd-mm-yyyy" required>
+            <label class="form-label">Yaranma tarixi</label>
+            <input type="text" class="form-control flat-date" th:field="*{born}" placeholder="dd-MM-yyyy">
+
         </div>
+
+
+
+
+
+
 
         <!-- Yaş aralığı -->
         <div class="mb-3">

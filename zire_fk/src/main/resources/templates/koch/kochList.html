@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koch List</title>
+    <title>Admintraining</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome (ikonlar üçün) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Custom CSS -->
-    <link th:href="@{/css/kochlist.css}" rel="stylesheet">
-    <!-- Responsive paginator JS -->
+    <link th:href="@{/css/kochList.css}" rel="stylesheet">
     <meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
 
 <body th:class="${theme}">
+<h3 class="text-center">Istifadəçilər</h3>
 <div class="container py-4">
-    <span class="me-3"><strong th:text="${name}">İstifadəçi</strong></span>
-    <div class="d-flex align-items-center justify-content-end">
-
-
-        <button type="submit" class="btn btn-success mb-3">Kabinetim</button>
-        <form th:action="@{/logout}" method="post" class="d-inline">
-            <button type="submit" class="btn btn-success mb-3">Çıxış</button>
-        </form>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span><strong th:text="${name}">İstifadəçilər</strong></span>
+        <div>
+            <a class="btn btn-success me-2" href="/admintraining/admintraining">Məşqlər</a>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-success">Çıxış</button>
+            </form>
+        </div>
     </div>
+
+
+
+
+
     <!-- Uğurlu əməliyyat -->
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <span th:text="${successMessage}"></span>
@@ -41,7 +44,7 @@
 
 
 
-    <h1 class="mb-4">İstifadəçilər</h1>
+
     <a th:href="@{/koch/kochAdd}" class="btn btn-success mb-3">Əlavə et</a>
 
     <div class="table-responsive">
@@ -106,6 +109,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/theme.js}"></script>
 <script th:src="@{/js/paginator.js}"></script>
+
 
 </body>
 </html>
