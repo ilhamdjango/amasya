@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://<DB_HOST>:5432/zire
+    url: jdbc:postgresql://dpg-d363u09r0fns73bjv1d0-a:5432/zire
     username: zire_user
     password: 6EPKcfSsjpwdxGBV3796YxFo9DrmY0oN
     driver-class-name: org.postgresql.Driver
