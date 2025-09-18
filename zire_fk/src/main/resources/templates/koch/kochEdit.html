@@ -27,7 +27,9 @@
         </form>
     </div>
     <h3 class="text-center mb-4">İstifadəçi Redaktə Et</h3>
-    <form th:action="@{/koch/kochEdit/{id}(id=${koch.id})}" th:object="${koch}" method="post" autocomplete="off">
+    <form th:action="@{/koch/kochEdit/{id}(id=${kochDto.id})}"
+          th:object="${kochDto}"
+          method="post" autocomplete="off">
 
     <input type="hidden" th:field="*{id}"/>
 
@@ -52,11 +54,11 @@
                    placeholder="İstifadəçi adı daxil edin" required>
         </div>
 
-        <!-- Password (opsional - editdə dəyişməsə boş buraxıla bilər) -->
+        <!--Password -->
         <div class="mb-3">
             <label for="password" class="form-label">Şifrə</label>
             <div class="input-wrapper position-relative">
-                <input type="password" class="form-control" id="password" th:field="*{password}"
+                <input type="password" class="form-control" id="password" name="password" th:field="*{password}"
                        placeholder="Şifrəni dəyişmək istəsəniz daxil edin"
                        autocomplete="new-password">
                 <i id="togglePassword"
@@ -66,15 +68,27 @@
         </div>
 
         <!-- Role -->
-        <div class="mb-3">
+        <div th:if="${userRole == 'SUPERADMIN'}" class="mb-3">
             <label for="role" class="form-label">Rol</label>
-            <select class="form-select" id="role" th:field="*{role}" required>
+            <select class="form-select" id="role" th:field="*{role}" required
+                    th:disabled="${isLastActiveSuperAdmin}">
                 <option value="">Seçin...</option>
-                <option value="STUDENT">Oyunçu</option>
-                <option value="KOCH">Məşqçi</option>
+                <option value="SUPERADMIN">Super Admin</option>
                 <option value="ADMIN">Admin</option>
+                <option value="KOCH">Məşqçi</option>
             </select>
         </div>
+        <!--Status-->
+        <div th:if="${userRole == 'SUPERADMIN'}" class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" th:field="*{status}">
+                <option th:value="ACTIVE">Aktiv</option>
+                <option th:value="DELETED">Silinmiş</option>
+                <option th:value="ARCHIVED">Arxivlənmiş</option>
+            </select>
+        </div>
+
+
 
         <!-- Born -->
         <div class="mb-3">

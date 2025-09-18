@@ -23,11 +23,14 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             String role = auth.getAuthority();
             System.out.println("User role: " + role); // ✅ Burada görəcəksən
-            if (role.equals("ROLE_ADMIN")) {
-                redirectUrl = "/koch/kochList";  // ADMIN səhifəsi
+            if (role.equals("ROLE_SUPERADMIN")) {
+                redirectUrl = "/koch/kochList"; // SUPERADMIN səhifəsi
+                break;
+            } else if (role.equals("ROLE_ADMIN")) {
+                redirectUrl = "/koch/kochList"; // ADMIN səhifəsi
                 break;
             } else if (role.equals("ROLE_KOCH")) {
-                redirectUrl = "/training/training";  // KOCH səhifəsi
+                redirectUrl = "/training/training"; // KOCH səhifəsi
                 break;
             }
         }

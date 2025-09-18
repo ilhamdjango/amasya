@@ -1,13 +1,11 @@
 body {
-    min-height: 100vh;
+    min-height: 100vh; /* tam ekran hündürlüyü */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* şaquli mərkəz */
+    justify-content: center; /* üfüqi mərkəz */
     margin: 0;
     font-family: Arial, sans-serif;
-    position: relative;
     transition: background-color 0.3s, color 0.3s;
-    min-height: 600px; /* calendar collapse olmaması üçün */
 }
 
 /* Toggle düyməsi */

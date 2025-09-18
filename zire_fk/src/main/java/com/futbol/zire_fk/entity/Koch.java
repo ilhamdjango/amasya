@@ -12,8 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "koch")
-@SQLDelete(sql = "UPDATE koch SET active = false WHERE id = ?") // delete çağırıldıqda active=false olur
-@Where(clause = "active = true") // bütün find sorğuları avtomatik active=true ilə filterlənir
+@SQLDelete(sql = "UPDATE koch SET active = false WHERE id = ?")
+@Where(clause = "active = true")
 public class Koch {
 
     @Id
@@ -25,6 +25,7 @@ public class Koch {
     private boolean active = true; // default aktiv
     private String name;
     private String surname;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate born;
     private String photo;
@@ -32,29 +33,16 @@ public class Koch {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    // Yeni enum sahəsi, default ACTIVE
+    @Enumerated(EnumType.STRING)
+    private TrainingDeleteStatus adminStatus = TrainingDeleteStatus.ACTIVE;
 
-    // ===========================
-    // Burada əlavə edirsən:
+    // Trainings əlaqəsi
     @OneToMany(mappedBy = "koch", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Training> trainings = new ArrayList<>();
 
-    public List<Training> getTrainings() { return trainings; }
-    public void setTrainings(List<Training> trainings) { this.trainings = trainings; }
-    // ===========================
-
+    // Constructor
     public Koch() {}
-
-    public Koch(Long id, String username, String password, boolean active, String name, String surname, LocalDate born, String photo, Role role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.active = active;
-        this.name = name;
-        this.surname = surname;
-        this.born = born;
-        this.photo = photo;
-        this.role = role;
-    }
 
     // Getters & Setters
     public Long getId() { return id; }
@@ -83,4 +71,10 @@ public class Koch {
 
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+
+    public TrainingDeleteStatus getAdminStatus() { return adminStatus; }
+    public void setAdminStatus(TrainingDeleteStatus adminStatus) { this.adminStatus = adminStatus; }
+
+    public List<Training> getTrainings() { return trainings; }
+    public void setTrainings(List<Training> trainings) { this.trainings = trainings; }
 }

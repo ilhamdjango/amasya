@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zire FK - İstifadəçi əlavə et</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/kochadd.css}" rel="stylesheet">
+</head>
+<body th:class="${theme}">
+
+<!-- Add user kart -->
+<div class="login-card">
+    <div class="d-flex align-items-center justify-content-end">
+        <span class="me-3"><strong th:text="${trainingName}">İstifadəçi</strong></span>
+
+        <!--Geri-->
+        <a th:href="@{/students/{id}(id=${trainingId})}" class="btn btn-success mb-3">
+            <i class="fa-solid fa-arrow-left me-1"></i>
+        </a>
+
+    </div>
+    <h3 class="text-center mb-4">Yeni İstifadəçi Əlavə Et</h3>
+    <!-- AUTOCOMPLETE söndürülüb -->
+    <form th:action="@{/students/studentadd}" th:object="${studentDto}" method="post">
+        <input type="hidden" th:field="*{trainingId}" th:value="${trainingId}" />
+
+        <!-- Name -->
+        <div class="mb-3">
+            <label class="form-label">Ad</label>
+            <input type="text" th:field="*{name}" class="form-control" placeholder="Tələbənin adı" required>
+        </div>
+
+        <!-- Surname -->
+        <div class="mb-3">
+            <label class="form-label">Soyad</label>
+            <input type="text" th:field="*{surname}" class="form-control" placeholder="Tələbənin soyadı" required>
+        </div>
+
+        <!-- Born -->
+        <div class="mb-3">
+            <label class="form-label">Doğum tarixi</label>
+            <input type="text"  class="form-control flat-date" th:field="*{dateBorn}" placeholder="dd-MM-yyyy">
+        </div>
+
+        <!-- Born -->
+        <div class="mb-3">
+            <label class="form-label">Qeydiyyat tarixi</label>
+            <input type="text"  class="form-control flat-date" th:field="*{createdAt}" placeholder="dd-MM-yyyy">
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3">
+            <label class="form-label">Telefon nömrəsi</label>
+            <input type="text" th:field="*{phone}" class="form-control" placeholder="Telefon nömrəsi" required>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-success w-100">Əlavə et</button>
+    </form>
+
+
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Flatpickr JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="/js/calendar.js"></script>
+<!-- Custom JS -->
+<script src="/js/theme.js"></script>
+<script src="/js/password-toggle.js"></script>
+
+
+
+
+</body>
+</html>

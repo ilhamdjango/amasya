@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import com.futbol.zire_fk.entity.TrainingDeleteStatus;
 
 public class TrainingDto {
 
@@ -24,7 +25,16 @@ public class TrainingDto {
     @Positive(message = "Ödəniş müsbət olmalıdır")
     private Double monthlyPayment;
 
-    // Constructor
+    // ✅ Yeni status sahəsi
+
+    private TrainingDeleteStatus status = TrainingDeleteStatus.ACTIVE; // default
+
+
+
+
+
+
+
     public TrainingDto() {}
 
     public TrainingDto(Long id, String name, LocalDate born, String ageRange, Double monthlyPayment) {
@@ -33,9 +43,9 @@ public class TrainingDto {
         this.born = born;
         this.ageRange = ageRange;
         this.monthlyPayment = monthlyPayment;
+
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -74,5 +84,13 @@ public class TrainingDto {
 
     public void setMonthlyPayment(Double monthlyPayment) {
         this.monthlyPayment = monthlyPayment;
+    }
+
+    public TrainingDeleteStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TrainingDeleteStatus status) {
+        this.status = status;
     }
 }

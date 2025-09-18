@@ -23,8 +23,9 @@
 <div class="login-card">
     <div class="d-flex align-items-center justify-content-end">
         <span class="me-3"><strong th:text="${name}">İstifadəçi</strong></span>
+        <!--Geri-->
         <form th:action="@{/koch/kochList}" method="get" class="d-inline">
-            <button type="submit" class="btn btn-success mb-3">Geri</button>
+            <button type="submit" class="btn btn-success mb-3"><i class="fa-solid fa-arrow-left me-1"></i></button>
         </form>
     </div>
     <h3 class="text-center mb-4">Yeni İstifadəçi Əlavə Et</h3>
@@ -69,11 +70,15 @@
         <!-- Role -->
         <div class="mb-3">
             <label for="role" class="form-label">Rol</label>
-            <select class="form-select" id="role" name="role" required>
+            <select class="form-select" id="role" th:field="*{role}" required>
                 <option value="">Seçin...</option>
-                <option value="STUDENT">Oyunçu</option>
-                <option value="KOCH">Məşqçi</option>
+
+                <!-- Yalnız SUPERADMIN görsün -->
+                <option th:if="${userRole == 'SUPERADMIN'}" value="SUPERADMIN">Super Admin</option>
+
+                <!-- Hər iki halda görsün -->
                 <option value="ADMIN">Admin</option>
+                <option value="KOCH">Məşqçi</option>
             </select>
         </div>
 

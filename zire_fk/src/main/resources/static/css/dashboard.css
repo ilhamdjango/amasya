@@ -1,0 +1,148 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.status-active { color: #28a745; font-weight: bold; }
+.status-deleted { color: #dc3545; font-weight: bold; }
+.status-archived { color: #ffc107; font-weight: bold; }
+.status-pending { color: #17a2b8; font-weight: bold; }
+
+.card-icon { font-size: 2rem; color: #4e73df; }
+
+.progress { height: 25px; }
+
+.equal-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 180px;
+}
+
+.circle-chart {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 140px;
+    height: 140px;
+    margin: 0 auto;
+}
+
+.circle-chart canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.circle-chart .circle-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+table { color: #e0e0e0; }
+.table-dark th, .table-dark td { color: #e0e0e0; }
+.table-striped tbody tr:nth-of-type(odd) { background-color: #1e1e1e; }
+.table-striped tbody tr:nth-of-type(even) { background-color: #2c2c2c; }
+/* 🌞 Light mode */
+body.light-mode {
+    background-color: #f5f5f5;
+    color: #121212;
+}
+
+body.light-mode table {
+    color: #121212;
+}
+body.light-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #ffffff;
+}
+body.light-mode .table-striped tbody tr:nth-of-type(even) {
+    background-color: #f0f0f0;
+}
+body.light-mode .circle-chart .circle-text {
+    color: #121212;
+}
+
+/* 🌙 Dark mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode table {
+    color: #e0e0e0;
+}
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #1e1e1e;
+}
+body.dark-mode .table-striped tbody tr:nth-of-type(even) {
+    background-color: #2c2c2c;
+}
+body.dark-mode .circle-chart .circle-text {
+    color: #e0e0e0;
+}
+
+/* Button rəngləri hər iki rejimdə eyni qala bilər */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Status rəngləri */
+.status-active   { color: #28a745; font-weight: bold; }
+.status-deleted  { color: #dc3545; font-weight: bold; }
+.status-archived { color: #ffc107; font-weight: bold; }
+.status-pending  { color: #17a2b8; font-weight: bold; }
+
+/* Digərləri dəyişmir */
+.card-icon   { font-size: 2rem; color: #4e73df; }
+.progress    { height: 25px; }
+.equal-card  { display: flex; flex-direction: column; justify-content: center; min-height: 180px; }
+.circle-chart {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 140px;
+    height: 140px;
+    margin: 0 auto;
+}
+.circle-chart canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.circle-chart .circle-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+}

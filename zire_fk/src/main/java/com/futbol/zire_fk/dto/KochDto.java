@@ -1,14 +1,15 @@
 package com.futbol.zire_fk.dto;
 
+import com.futbol.zire_fk.entity.Role;
+import com.futbol.zire_fk.entity.TrainingDeleteStatus;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.time.LocalDate;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
+import java.time.LocalDate;
 
 public class KochDto {
 
-    private Long id; // Entity-də var, DTO-da optional
+    private Long id;
 
     @NotBlank(message = "İstifadəçi adı boş ola bilməz")
     private String username;
@@ -16,7 +17,7 @@ public class KochDto {
     @NotBlank(message = "Şifrə boş ola bilməz")
     private String password;
 
-    private boolean active = true; // default true
+    private boolean active = true;
 
     @NotBlank(message = "Ad boş ola bilməz")
     private String name;
@@ -28,19 +29,22 @@ public class KochDto {
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate born;
 
+    @NotNull(message = "Rol boş ola bilməz")
+    private Role role;   // 🔥 String yox, Enum oldu
 
 
-    private String role;
+    // 🔹 Status sahəsi əlavə olunur
+    private TrainingDeleteStatus status;
 
-    public String getRole() {
-        return role;
+    public TrainingDeleteStatus getStatus() {
+        return status;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setStatus(TrainingDeleteStatus status) {
+        this.status = status;
     }
-// Getter və Setter-lər
 
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -62,5 +66,6 @@ public class KochDto {
     public LocalDate getBorn() { return born; }
     public void setBorn(LocalDate born) { this.born = born; }
 
-
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 }

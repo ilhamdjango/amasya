@@ -1,55 +1,45 @@
-/* Ümumi bədən */
+/* ==============================
+   Ümumi stil
+============================== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
     min-height: 100vh;
-    position: relative;
     transition: background-color 0.3s, color 0.3s;
-}
-
-/* Toggle düyməsi */
-#mode-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    cursor: pointer;
-}
-
-/* Başlıq */
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
 }
 
 /* Table stil */
 .table {
     width: 100%;
     border-collapse: collapse;
-    transition: background-color 0.3s, color 0.3s;
-    margin: 0;
-    padding: 0;
+    table-layout: auto;
+    white-space: nowrap;
 }
 
-/* Table başlıqlar */
 .table thead th {
     text-align: center;
+    padding: 10px;
 }
 
-/* Table body */
 .table tbody td {
-    vertical-align: middle;
     text-align: center;
-    transition: background-color 0.3s, color 0.3s;
+    vertical-align: middle;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 /* Düymələr */
-.btn {
-    transition: background-color 0.3s, color 0.3s;
-}
+.btn { transition: background-color 0.3s, color 0.3s; }
 
-/* Light Mode */
+/* Status rəngləri */
+.status-active { color: #28a745; font-weight: bold; }
+.status-deleted { color: #dc3545; font-weight: bold; }
+.status-pending { color: #ffc107; font-weight: bold; }
+
+/* ==============================
+   Light Mode
+============================== */
 body.light-mode {
     background-color: #f5f5f5;
     color: #000;
@@ -65,17 +55,12 @@ body.light-mode .table thead {
     color: #fff;
 }
 
-body.light-mode .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
+body.light-mode .btn-primary { background-color: #007bff; border-color: #007bff; }
+body.light-mode .btn-danger { background-color: #dc3545; border-color: #dc3545; }
 
-body.light-mode .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-/* Dark Mode */
+/* ==============================
+   Dark Mode
+============================== */
 body.dark-mode {
     background-color: #1e1e2f;
     color: #fff;
@@ -91,38 +76,26 @@ body.dark-mode .table thead {
     color: #fff;
 }
 
-body.dark-mode .btn-primary {
-    background-color: #4a4aff;
-    border-color: #4a4aff;
-}
+body.dark-mode .btn-primary { background-color: #4a4aff; border-color: #4a4aff; }
+body.dark-mode .btn-danger { background-color: #ff4a4a; border-color: #ff4a4a; }
 
-body.dark-mode .btn-danger {
-    background-color: #ff4a4a;
-    border-color: #ff4a4a;
-}
-
-/* Table və login-card üçün kölgə */
-.login-card,
+/* Table və card kölgəsi */
 .table-responsive {
     border-radius: 0.5rem;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
-    overflow: hidden;
-    transition: box-shadow 0.3s;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
-/* Dark mode kölgəsi */
-body.dark-mode .login-card,
-body.dark-mode .table-responsive,
-body.dark-mode .table tbody tr {
+body.dark-mode .table-responsive {
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);
 }
 
-/* Table sütunlarının enləri */
+/* Table sütunları */
 .col-name { width: 180px; }
 .col-date { width: 120px; }
 .col-age { width: 100px; }
 .col-count { width: 80px; }
-.col-break { width: 100px; }
 .col-total { width: 120px; }
 .col-paid { width: 120px; }
 .col-unpaid { width: 120px; }
@@ -130,70 +103,11 @@ body.dark-mode .table tbody tr {
 .col-status { width: 120px; }
 .col-actions { width: 150px; }
 
-/* Mobil üçün uyğunluq */
+/* ==============================
+   Mobil (iPhone SE, Honor 400 və s.)
+============================== */
 @media (max-width: 768px) {
-    .table thead {
-        display: none;
-    }
-
-    .table tbody td {
-        display: block;
-        text-align: right;
-        position: relative;
-        padding-left: 45%;
-        border: none;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .table tbody td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-left: 10px;
-        font-weight: bold;
-        text-align: left;
-    }
-
-    .table tbody tr {
-        display: block;
-        margin-bottom: 0;
-        border: none;
-        border-radius: 0;
-        padding: 5px 0;
-        background-color: inherit;
-        box-shadow: none;
-    }
-
-    .table-responsive {
-        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
-        border-radius: 0.5rem;
-        padding: 5px;
-    }
-
-    body.dark-mode .table-responsive {
-        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);
-    }
-
-    td[data-label="Əməliyyatlar"] .btn {
-        display: block;
-        width: 100%;
-        margin-bottom: 5px;
-    }
-
-    /* Kiçik telefonlar üçün progress bar */
-    .progress { height: 15px; }
-    .progress-bar { font-size: 0.75rem; }
-
-    /* Responsive sütun enləri */
-    .col-name, .col-actions { width: 120px; }
-    .col-date, .col-age, .col-count, .col-break,
-    .col-total, .col-paid, .col-unpaid, .col-nopay, .col-status {
-        width: 80px;
-    }
-
-
+    .table-responsive { overflow-x: auto; }
+    .table thead { display: table-header-group; }
+    .table tbody td { display: table-cell; padding: 8px; }
 }
-  .status-active { color: #28a745; font-weight: bold; }
-    .status-deleted { color: #dc3545; font-weight: bold; }
-    .status-pending { color: #ffc107; font-weight: bold; }

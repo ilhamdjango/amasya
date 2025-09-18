@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tələbələr</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/training.css}" rel="stylesheet">
+</head>
+<body th:class="${theme}">
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span>
+            <strong th:text="${teacherName}">Müəllim</strong>--
+             <strong th:text="${trainingName}">Məşqlər</strong>
+
+</span>
+        <a th:href="${#authorization.expression('hasRole(''SUPERADMIN'')') ?
+              '/admintraining/admintraining' :
+              (#authorization.expression('hasRole(''ADMIN'')') ?
+               '/admintraining/admintraining' :
+               '/training/training')}"
+           class="btn btn-success mb-3">
+            <i class="fa-solid fa-arrow-left me-1"></i> Geri
+        </a>
+
+
+    </div>
+<!-- Alerts -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Elave et düyməsi -->
+    <a th:href="@{/students/studentadd(trainingId=${trainingId})}" class="btn btn-success mb-3">
+        <i class="fa-solid fa-plus me-1"></i>
+    </a>
+    <!-- Saat iconlu düymə -->
+    <a th:href="@{/students/studentHours/{trainingId}(trainingId=${trainingId})}"
+       class="btn btn-primary mb-3"
+       onclick="return confirm('Dərs keçirildiyinə əminsinizmi?');">
+        <i class="fa-solid fa-clock me-1"></i> Saatlar
+    </a>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Qeydiyyat</th>
+                <th>Telefon</th>
+                <th>
+                    <a th:href="@{${baseUrl}(page=${pageNumber}, sort='totalDebts', order=${order == 'asc' ? 'desc' : 'asc'})}">
+                        Qalıq
+                    </a>
+                </th>
+                <th>Şəxsi sənədlər</th>
+
+                <!-- 🔹 Status sütunu yalnız ADMIN və SUPERADMIN üçün -->
+                <th th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''SUPERADMIN'')')}">Status</th>
+
+                <th>Aktivlik</th>
+                <th>Əməliyyatlar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${studentsPage.content}">
+                <td th:text="${student.name}">Ad</td>
+                <td th:text="${student.surname}">Soyad</td>
+                <td th:text="${student.createdAt != null} ? ${#temporals.format(student.createdAt, 'dd-MM-yyyy')} : ''" data-label="Qeydiyyat tarixi"></td>
+                <td th:text="${student.phone}">+994...</td>
+                <td th:text="${student.inDebt} + ' AZN'">0 AZN</td>
+                <td>
+                    <a th:href="@{'/students/documents/' + ${student.id} + '/' + ${trainingId}}"
+                       class="badge bg-success text-decoration-none"
+                       th:if="${student.documents}">
+                        Verilib
+                    </a>
+
+                    <a th:href="@{'/students/documents/' + ${student.id} + '/' + ${trainingId}}"
+                       class="badge bg-warning text-dark text-decoration-none"
+                       th:if="${!student.documents}">
+                        Verilməyib
+                    </a>
+
+                </td>
+
+
+                <td>
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar" role="progressbar"
+                             th:style="'width:' + ${student.activityRate} + '%; background-color:' +
+                (${student.activityRate} <= 50 ? 'red' : (${student.activityRate} <= 75 ? 'blue' : 'green')) + ';'"
+                             th:text="${student.activityRate} + '%'">
+                        </div>
+                    </div>
+                </td>
+                <td th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''SUPERADMIN'')')}"
+                    th:classappend="${student.studentStatus != null} ? (
+        ${student.studentStatus.toString() == 'ACTIVE'} ? 'text-success fw-bold' :
+        (${student.studentStatus.toString() == 'DELETED'} ? 'text-danger fw-bold' :
+        (${student.studentStatus.toString() == 'ARCHIVED'} ? 'text-warning fw-bold' : ''))
+    ) : ''"
+                    th:text="${student.studentStatus}">
+                </td>
+
+
+                <td>
+                    <a th:href="@{'/students/edit/' + ${student.id}}" class="btn btn-sm btn-primary me-1">
+                        <i class="fa fa-pen"></i>
+                    </a>
+                    <a th:href="@{'/students/delete/' + ${student.id}}"
+                       class="btn btn-sm btn-danger me-1"
+                       onclick="return confirm('Silmek istədiyinizdən əminsiniz?');">
+                        <i class="fa fa-trash"></i>
+                    </a>
+
+                    </a>
+                    <a th:href="@{/students/attendance(studentId=${student.id})}"
+                       class="btn btn-sm btn-info me-1"
+                       onclick="return confirm('Tələbənin dərsə gəlmədiyinə əminsinizmi?');">
+                        <i class="fa fa-chart-line"></i>
+                    </a>
+
+                    <form th:action="@{'/students/payment/' + ${student.id}}" method="post" style="display:inline;">
+                        <input type="hidden" name="trainingId" th:value="${student.training.id}" />
+                        <button type="submit" class="btn btn-sm"
+                                th:classappend="${student.inDebt > 0} ? 'btn-danger' : (${student.inDebt== 0} ? 'btn-success' : 'btn-warning')"
+                                onclick="return confirm('Ödənişi təsdiqləyirsinizmi?');">
+                            <i class="fa fa-money-bill"></i>
+                        </button>
+                    </form>
+
+                </td>
+            </tr>
+            <thead class="table-dark">
+            <tr>
+                <th colspan="9" th:text="|Ümumi borc: ${totalDebt} AZN|">Ümumi borc: 0 AZN</th>
+            </tr>
+            </thead>
+            </tbody>
+
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+
+            <!-- Previous -->
+            <li class="page-item" th:classappend="${pageNumber == 0} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/students/documents/list/{trainingId}(trainingId=${trainingId}, page=${pageNumber > 0 ? pageNumber-1 : 0}, size=${size})}"
+                   aria-label="Previous">&laquo;</a>
+            </li>
+
+            <!-- Page numbers -->
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == pageNumber} ? 'active'">
+                <a class="page-link"
+                   th:href="@{/students/documents/list/{trainingId}(trainingId=${trainingId}, page=${i}, size=${size})}"
+                   th:text="${i + 1}"></a>
+            </li>
+
+            <!-- Next -->
+            <li class="page-item" th:classappend="${pageNumber + 1 >= totalPages} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/students/documents/list/{trainingId}(trainingId=${trainingId}, page=${pageNumber + 1 < totalPages ? pageNumber + 1 : pageNumber}, size=${size})}"
+                   aria-label="Next">&raquo;</a>
+            </li>
+
+        </ul>
+    </nav>
+
+
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/theme.js}"></script>
+
+
+</body>
+</html>

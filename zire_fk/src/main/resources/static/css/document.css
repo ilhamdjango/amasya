@@ -1,0 +1,146 @@
+/* Ümumi dizayn */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 20px;
+    min-height: 100vh;
+    color: var(--text-color);
+    background: var(--bg-color);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Theme dəyişənləri */
+body.light {
+    --text-color: #212529;
+    --bg-color: #f8f9fa;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --table-header: rgba(240, 240, 240, 0.95);
+    --btn-primary: #0d6efd;
+    --btn-danger: #dc3545;
+    --input-bg: #fff;
+    --input-text: #212529;
+    --input-border: #0d6efd;
+}
+
+body.dark {
+    --text-color: #f8f9fa;
+    --bg-color: #212529;
+    --card-bg: rgba(40, 44, 52, 0.9);
+    --table-header: rgba(60, 63, 69, 0.9);
+    --btn-primary: #1cc88a;
+    --btn-danger: #e74a3b;
+    --input-bg: #2c3034;
+    --input-text: #f8f9fa;
+    --input-border: #1cc88a;
+}
+
+/* Kart */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    margin-bottom: 25px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Başlıqlar */
+h3, h5 {
+    font-weight: 600;
+}
+
+/* Table */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: var(--table-header);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table img {
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+.table img:hover {
+    transform: scale(1.1);
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    opacity: 0.95;
+}
+
+.btn-success {
+    background: var(--btn-primary);
+    color: #fff;
+}
+
+.btn-danger {
+    background: var(--btn-danger);
+    color: #fff;
+}
+
+.btn-outline-primary {
+    border: 2px dashed var(--input-border);
+    color: var(--input-border);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--input-border);
+    color: #fff;
+}
+
+/* Custom file input */
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 15px;
+    border: 2px dashed var(--input-border);
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    transition: background 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+#fileName {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--input-text);
+}

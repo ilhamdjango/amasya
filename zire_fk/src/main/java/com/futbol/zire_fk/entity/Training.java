@@ -5,12 +5,18 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.futbol.zire_fk.entity.StudentStatus; // sizin enum yeri
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "training")
 public class Training {
+
+
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +36,9 @@ public class Training {
     private Integer debtCount = 0;      // Borc nəfərlə (default 0)
     @Min(0)
     @Max(100)
-    private Double activePercent = 0.0;   // Aktivlik faizi (0-100, default 0)
+    @Column(precision = 5, scale = 2)
+    private BigDecimal activePercent = BigDecimal.ZERO;
+
 
 
 
@@ -58,6 +66,21 @@ public class Training {
     protected void onCreate() {
         this.createdDate = LocalDate.now();
     }
+
+    @OneToMany(mappedBy = "training", fetch = FetchType.LAZY)
+    private List<Students> students;
+
+    // Getter
+    public List<Students> getStudents() {
+        return students;
+    }
+
+    // Setter
+    public void setStudents(List<Students> students) {
+        this.students = students;
+    }
+
+
 
     // Getters & Setters
     public Long getId() { return id; }
@@ -91,9 +114,13 @@ public class Training {
     public Integer getDebtCount() { return debtCount; }
     public void setDebtCount(Integer debtCount) { this.debtCount = debtCount; }
 
-    public Double getActivePercent() { return activePercent; }
-    public void setActivePercent(Double activePercent) { this.activePercent = activePercent; }
+    public BigDecimal getActivePercent() {
+        return activePercent;
+    }
 
+    public void setActivePercent(BigDecimal activePercent) {
+        this.activePercent = activePercent;
+    }
 
     public BigDecimal getMonthlyPayment() { return monthlyPayment; }
     public void setMonthlyPayment(BigDecimal monthlyPayment) { this.monthlyPayment = monthlyPayment; }

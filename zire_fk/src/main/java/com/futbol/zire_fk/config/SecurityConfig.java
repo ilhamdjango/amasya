@@ -31,11 +31,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // açıq səhifələr
-                        .requestMatchers("/login", "/css/**", "/js/**", "/set-theme").permitAll()
+                        .requestMatchers("/login", "/css/**", "/js/**", "/set-theme","/students").permitAll()
 
                         // rola görə icazələr
-                        .requestMatchers("/koch/**").hasRole("ADMIN")   // ADMIN üçün
-                        .requestMatchers("/training/**").hasRole("KOCH") // KOCH üçün
+                        .requestMatchers("/koch/**").hasAnyRole("ADMIN", "SUPERADMIN")  // həm ADMIN, həm SUPERADMIN
+                        .requestMatchers("/training/**").hasAnyRole("KOCH","ADMIN","SUPERADMIN")               // KOCH üçün
 
                         // qalan bütün requestlər login tələb edir
                         .anyRequest().authenticated()
