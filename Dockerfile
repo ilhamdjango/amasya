@@ -2,13 +2,12 @@
 FROM maven:3.9.2-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Maven dependency-ləri yüklə
-COPY pom.xml .
+# pom.xml zire_fk qovluğundan kopyala
+COPY zire_fk/pom.xml .
 RUN mvn dependency:go-offline
 
-# Kodları kopyala və build et
+# src qovluğunu kopyala
 COPY zire_fk/src ./src
-COPY zire_fk/pom.xml ./pom.xml
 RUN mvn clean package -DskipTests
 
 # 2-ci stage: Runtime
