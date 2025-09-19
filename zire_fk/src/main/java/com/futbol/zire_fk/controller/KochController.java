@@ -74,7 +74,7 @@ public class KochController {
         // Page size
         String userAgent = request.getHeader("User-Agent");
         int size = (userAgent != null && (userAgent.contains("Mobi")
-                || userAgent.contains("Android") || userAgent.contains("iPhone"))) ? 5 : 5;
+                || userAgent.contains("Android") || userAgent.contains("iPhone"))) ? 15 : 15;
 
         // Koch list
         Page<Koch> kochPage = kochService.getKochListForUser(principal, PageRequest.of(page, size));

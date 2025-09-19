@@ -71,7 +71,7 @@ public class StudentsController {
     @GetMapping("/{trainingId}")
     public String getStudentsByTraining(@PathVariable Long trainingId,
                                         @RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "5") int size,
+                                        @RequestParam(defaultValue = "25") int size,
                                         @RequestParam(defaultValue = "id") String sort,
                                         @RequestParam(defaultValue = "asc") String order,
                                         Model model,

@@ -128,7 +128,7 @@ public class TrainingController {
         }
         model.addAttribute("theme", theme + "-mode");
 
-        int size = 5; // səhifədə neçə training olacaq
+        int size = 15; // səhifədə neçə training olacaq
 
         if (principal != null) {
             String username = principal.getName();
