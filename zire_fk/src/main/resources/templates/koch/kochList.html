@@ -103,35 +103,29 @@
                     <canvas id="incomeChart" height="80"></canvas>
                     <script th:inline="javascript">
                         /*<![CDATA[*/
-                        // Backend-dən gələn JSON-ları JS array-a çeviririk
-                        const months = /*[[${last6MonthsJson}]]*/ '[]';
-                        const incomeDataRaw = /*[[${attendanceTotalsJson}]]*/ '[]';
-                        const incomeData = JSON.parse(incomeDataRaw).map(v => v); // lazım gələrsə 1000-ə böl
+                        window.addEventListener('DOMContentLoaded', () => {
+                            const months = /*[[${last6MonthsJson}]]*/ '[]';
+                            const incomeDataRaw = /*[[${attendanceTotalsJson}]]*/ '[]';
+                            const incomeData = JSON.parse(incomeDataRaw).map(v => v);
 
-                        console.log("Months:", months);
-                        console.log("Income data:", incomeData);
+                            const ctxIncomeEl = document.getElementById('incomeChart');
+                            if(ctxIncomeEl) {
+                                const ctxIncome = ctxIncomeEl.getContext('2d');
+                                new Chart(ctxIncome, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: JSON.parse(months),
+                                        datasets: [{ data: incomeData, backgroundColor: '#4e73df' }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: { legend: { display: false } },
+                                        scales: { y: { beginAtZero: true } }
+                                    }
+                                });
+                            }
 
-                        // Bar chart
-                        const ctxIncome = document.getElementById('incomeChart').getContext('2d');
-                        new Chart(ctxIncome, {
-                            type: 'bar',
-                            data: {
-                                labels: JSON.parse(months),
-                                datasets: [{ data: incomeData, backgroundColor: '#4e73df' }]
-                            },
-                            options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-                        });
-
-                        // Doughnut chart üçün misal
-                        const monthlyIncome = 5000;
-                        const ctxCircle = document.getElementById('monthlyIncomeChart').getContext('2d');
-                        new Chart(ctxCircle, {
-                            type: 'doughnut',
-                            data: {
-                                labels: ['Gəlir','Qalan'],
-                                datasets: [{ data: [monthlyIncome, 50000 - monthlyIncome], backgroundColor: ['#28a745','#2c2c2c'], borderWidth: 0 }]
-                            },
-                            options: { cutout: '80%', plugins: { legend: { display: false } } }
+                            // Əgər lazım olsa digər chartları da burda yığa bilərsən
                         });
                         /*]]>*/
                     </script>
