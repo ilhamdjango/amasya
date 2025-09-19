@@ -96,10 +96,9 @@
                 <tr th:each="img : ${images}">
                     <td th:text="${img.id}"></td>
                     <td>
-                        <img th:src="@{/uploads/{fileName}(fileName=${img.fileName})}"
-                             alt="şəkil"
-                             class="img-thumbnail"
-                             style="max-width: 120px;">
+                        <a th:href="@{'/uploads/' + ${img.fileName}}" target="_blank">
+                            <img th:src="@{'/uploads/' + ${img.fileName}}" class="img-thumbnail" style="max-width: 120px;">
+                        </a>
                     </td>
                     <td th:text="${img.documentName}"></td>
                     <td>
