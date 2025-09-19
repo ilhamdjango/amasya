@@ -29,3 +29,6 @@ server:
 logging:
   level:
     root: INFO
+
+file:
+  upload-dir: /app/uploads   # ✅ burada əlavə et
