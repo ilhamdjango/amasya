@@ -23,8 +23,8 @@ public class StudentDebtService {
     public void increaseDebtMonthly() {
            List<Students> students = studentsRepository.findAll();
          //    int todayDay = java.time.LocalDate.now().getDayOfMonth(); //realda bunu islet
-        // int todayDay = LocalDate.now().getDayOfMonth();    //bu daha yaxsi
-        int todayDay = LocalDate.of(2025, 9, 13).getDayOfMonth();  //mock etmek ucun
+         int todayDay = LocalDate.now().getDayOfMonth();    //bu daha yaxsi
+        //int todayDay = LocalDate.of(2025, 9, 13).getDayOfMonth();  //mock etmek ucun
         for (Students student : students) {
             if (student.getTraining() != null && student.getCreatedAt() != null) {
                 int createdDay = student.getCreatedAt().getDayOfMonth();

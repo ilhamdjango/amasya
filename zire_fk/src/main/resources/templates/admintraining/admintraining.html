@@ -13,7 +13,7 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
 <body th:class="${theme}">
-<h3 class="text-center">Məşqlər</h3>
+<h3 class="text-center">Məşğələ</h3>
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div th:if="${#authorization.expression('hasRole(''SUPERADMIN'')')}">

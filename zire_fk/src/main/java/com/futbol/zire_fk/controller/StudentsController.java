@@ -59,12 +59,12 @@ public class StudentsController {
         this.attendanceService=attendanceService;
     }
 
-
-    @GetMapping("/test-debt")
-    public String testDebtIncrease() {
-        studentDebtService.increaseDebtMonthly();
-        return "students/test-debt"; // HTML faylının adı (test-debt.html)
-    }
+//Zamani test ucun saxlayanda
+//    @GetMapping("/test-debt")
+//    public String testDebtIncrease() {
+//        studentDebtService.increaseDebtMonthly();
+//        return "students/test-debt"; // HTML faylının adı (test-debt.html)
+//    }
 
 
     @GetMapping("/{trainingId}")

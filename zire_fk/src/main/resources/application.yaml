@@ -14,9 +14,18 @@ spring:
   application:
     name: zire_fk
 
-server:
-  port: 8080
+  profiles:
+    active: prod
 
+  thymeleaf:
+    cache: true
+
+server:
+  port: ${PORT:8080}
   web:
     resources:
       static-locations: classpath:/static/
+
+logging:
+  level:
+    root: INFO
