@@ -7,6 +7,7 @@ import com.futbol.zire_fk.service.ImageService;
 import com.futbol.zire_fk.service.StudentDebtService;
 import com.futbol.zire_fk.service.StudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -425,6 +426,9 @@ public class StudentsController {
 
 
 
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
     @PostMapping("/documents/{studentId}/{trainingId}")
     public String uploadImage(@PathVariable Long studentId,
                               @PathVariable Long trainingId,
@@ -436,8 +440,6 @@ public class StudentsController {
             return "redirect:/students?error=notfound";
         }
 
-        // Layihə daxilində resources/static/uploads qovluğu
-        String uploadDir = new File("src/main/resources/static/uploads").getAbsolutePath();
         File uploadPath = new File(uploadDir);
         if (!uploadPath.exists()) {
             uploadPath.mkdirs(); // Qovluğu yarad
@@ -451,7 +453,6 @@ public class StudentsController {
         // Faylı diskə yaz
         file.transferTo(dest);
 
-
         // DB-yə əlavə et
         Image img = new Image();
         img.setFileName(fileName);
@@ -461,12 +462,8 @@ public class StudentsController {
         img.setStudent(student);
         imageService.saveImage(img);
 
-        // redirect həm studentId, həm də trainingId ilə olsun
-        // Düzgün redirect
         return "redirect:/students/documents/" + studentId + "/" + trainingId;
     }
-
-
 
 
 
