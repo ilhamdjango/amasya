@@ -142,10 +142,13 @@ public class StudentsController {
         model.addAttribute("trainingName", studentsService.getTrainingNameById(trainingId));
         model.addAttribute("teacherName", studentsService.getTeacherNameByTrainingId(trainingId));
 
+        int totalPages = studentsPage.getTotalPages();
+        if (totalPages == 0) totalPages = 1;  // minimum 1 page
+
 
         // Pagination üçün məlumatlar
         model.addAttribute("pageNumber", studentsPage.getNumber());
-        model.addAttribute("totalPages", studentsPage.getTotalPages());
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("size", size);
         model.addAttribute("sort", sort);
         model.addAttribute("order", order);
@@ -397,11 +400,17 @@ public class StudentsController {
 
         Page<Image> imagesPage = imageService.getImagesByStudentPaginated(student, PageRequest.of(page, size));
 
+
         model.addAttribute("student", student);
         model.addAttribute("trainingId", trainingId);
         model.addAttribute("imagesPage", imagesPage);
         model.addAttribute("images", imagesPage.getContent());
         model.addAttribute("theme", theme);
+
+// ✅ Pagination üçün uyğun atributlar
+        model.addAttribute("pageNumber", imagesPage.getNumber());
+        model.addAttribute("totalPages", imagesPage.getTotalPages());
+        model.addAttribute("size", imagesPage.getSize());
 
         return "students/documents";
     }
@@ -441,7 +450,7 @@ public class StudentsController {
 
         // Faylı diskə yaz
         file.transferTo(dest);
-        System.out.println("Fayl diskə yazıldı: " + dest.getAbsolutePath());
+
 
         // DB-yə əlavə et
         Image img = new Image();
@@ -456,6 +465,17 @@ public class StudentsController {
         // Düzgün redirect
         return "redirect:/students/documents/" + studentId + "/" + trainingId;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // 🗑️ Şəkil silmə
     @GetMapping("/documents/{studentId}/delete/{imageId}")

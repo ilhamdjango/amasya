@@ -157,31 +157,18 @@
     <!-- Pagination -->
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-
-            <!-- Previous -->
             <li class="page-item" th:classappend="${pageNumber == 0} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/students/documents/list/{trainingId}(trainingId=${trainingId}, page=${pageNumber > 0 ? pageNumber-1 : 0}, size=${size})}"
-                   aria-label="Previous">&laquo;</a>
+                <a class="page-link" th:href="@{${baseUrl}(page=${pageNumber > 0 ? pageNumber-1 : 0}, size=${size}, sort=${sort}, order=${order})}">&laquo;</a>
             </li>
-
-            <!-- Page numbers -->
-            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                th:classappend="${i == pageNumber} ? 'active'">
-                <a class="page-link"
-                   th:href="@{/students/documents/list/{trainingId}(trainingId=${trainingId}, page=${i}, size=${size})}"
-                   th:text="${i + 1}"></a>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages-1)}" th:classappend="${i == pageNumber} ? 'active'">
+                <a class="page-link" th:href="@{${baseUrl}(page=${i}, size=${size}, sort=${sort}, order=${order})}" th:text="${i + 1}"></a>
             </li>
-
-            <!-- Next -->
             <li class="page-item" th:classappend="${pageNumber + 1 >= totalPages} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/students/documents/list/{trainingId}(trainingId=${trainingId}, page=${pageNumber + 1 < totalPages ? pageNumber + 1 : pageNumber}, size=${size})}"
-                   aria-label="Next">&raquo;</a>
+                <a class="page-link" th:href="@{${baseUrl}(page=${pageNumber + 1 < totalPages ? pageNumber + 1 : pageNumber}, size=${size}, sort=${sort}, order=${order})}">&raquo;</a>
             </li>
-
         </ul>
     </nav>
+
 
 
 

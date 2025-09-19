@@ -201,6 +201,8 @@ public class AdminTrainingController {
 
 
 
+
+
         BigDecimal totalPaymentsAll = totalPaymentsMap.values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("totalPaymentsAll", totalPaymentsAll);
@@ -229,6 +231,7 @@ public class AdminTrainingController {
 
         // Pagination məlumatları
         int totalPages = (int) Math.ceil((double) allTrainings.size() / size);
+        if(totalPages == 0) totalPages = 1;  // boş olsa da 1 səhifə göstər
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("baseUrl", "/admintraining/admintraining");

@@ -124,7 +124,7 @@
                 <li class="page-item" th:classappend="${imagesPage.first} ? 'disabled'">
                     <a class="page-link"
                        th:href="@{/students/documents/{studentId}/{trainingId}(studentId=${student.id}, trainingId=${trainingId}, page=${imagesPage.number - 1})}">
-                        « Əvvəlki
+                        <i class="fa-solid fa-chevron-left me-1"></i>
                     </a>
                 </li>
 
@@ -137,7 +137,7 @@
                 <li class="page-item" th:classappend="${imagesPage.last} ? 'disabled'">
                     <a class="page-link"
                        th:href="@{/students/documents/{studentId}/{trainingId}(studentId=${student.id}, trainingId=${trainingId}, page=${imagesPage.number + 1})}">
-                        Növbəti »
+                        <i class="fa-solid fa-chevron-right ms-1"></i>
                     </a>
                 </li>
 
