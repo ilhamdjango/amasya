@@ -29,7 +29,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     void decrementAttendance(@Param("studentId") Long studentId);
 
     Attendance findByStudentId(Long studentId);
-    List<Attendance> findTop8ByStudentIdOrderByCreateTimeDesc(Long studentId);
+    List<Attendance> findTop12ByStudentIdOrderByCreateTimeDesc(Long studentId);
 
     @Query("SELECT COALESCE(SUM(a.attendance), 0) " +
             "FROM Attendance a " +

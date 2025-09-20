@@ -45,7 +45,7 @@ public class AttendanceService {
             attendanceRepository.save(attendance);
 
             List<Attendance> last8 = attendanceRepository
-                    .findTop8ByStudentIdOrderByCreateTimeDesc(student.getId());
+                    .findTop12ByStudentIdOrderByCreateTimeDesc(student.getId());
 
             BigDecimal totalAttendance = BigDecimal.ZERO;
             BigDecimal totalLessonHeld = BigDecimal.ZERO;
@@ -96,7 +96,7 @@ public class AttendanceService {
 
         // Son 8 Attendance qeydlərini götür
         List<Attendance> last8 = attendanceRepository
-                .findTop8ByStudentIdOrderByCreateTimeDesc(studentId);
+                .findTop12ByStudentIdOrderByCreateTimeDesc(studentId);
 
         BigDecimal activityRate = BigDecimal.ZERO;
         if (!last8.isEmpty()) {
